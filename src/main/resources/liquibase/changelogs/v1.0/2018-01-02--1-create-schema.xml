@@ -1,0 +1,310 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2018-01-02--1" author="AlexVolochai" context="schemedata">
+        <createTable tableName="countries">
+            <column name="id" type="SERIAL" autoIncrement="true"/>
+            <column name="name" type="VARCHAR(32)"/>
+            <column name="tariff" type="numeric(8, 2)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2018-01-02--1-1" author="AlexVolochai" context="schemedata">
+        <addPrimaryKey tableName="countries" columnNames="id" constraintName="countries_pkey"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--1-2" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="countries" columnName="name"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--1-3" author="AlexVolochai" context="schemedata">
+        <addUniqueConstraint tableName="countries" columnNames="name" constraintName="countries_name_key"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--1-4" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="countries" columnName="tariff"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--2" author="AlexVolochai" context="schemedata">
+        <createTable tableName="cities">
+            <column name="id" type="SERIAL" autoIncrement="true"/>
+            <column name="id_country" type="INT"/>
+            <column name="name" type="VARCHAR(32)"/>
+            <column name="tariff" type="numeric(6, 2)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2018-01-02--2-1" author="AlexVolochai" context="schemedata">
+        <addPrimaryKey tableName="cities" columnNames="id" constraintName="cities_pkey"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--2-2" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="cities" columnName="id_country"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--2-3" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="cities" columnName="name"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--2-4" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="cities" columnName="tariff"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--2-5" author="AlexVolochai" context="schemedata">
+        <addForeignKeyConstraint baseColumnNames="id_country" baseTableName="cities"
+                                 constraintName="cities_id_country_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="CASCADE" referencedColumnNames="id"
+                                 referencedTableName="countries"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--3" author="AlexVolochai" context="schemedata">
+        <createTable tableName="branches">
+            <column autoIncrement="true" name="id" type="SERIAL"/>
+            <column name="id_city" type="INT"/>
+            <column name="street" type="VARCHAR(32)"/>
+            <column name="street_number" type="VARCHAR(8)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2018-01-02--3-1" author="AlexVolochai" context="schemedata">
+        <addPrimaryKey tableName="branches" columnNames="id" constraintName="branches_pkey"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--3-2" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="branches" columnName="id_city"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--3-3" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="branches" columnName="street"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--3-4" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="branches" columnName="street_number"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--3-5" author="AlexVolochai" context="schemedata">
+        <addForeignKeyConstraint baseColumnNames="id_city" baseTableName="branches"
+                                 constraintName="branches_id_city_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="CASCADE" referencedColumnNames="id"
+                                 referencedTableName="cities"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--4" author="AlexVolochai" context="schemedata">
+        <createTable tableName="users">
+            <column name="id" type="UUID"/>
+            <column name="username" type="VARCHAR(16)"/>
+            <column name="password" type="VARCHAR(20)" defaultValue="NOT SET"/>
+            <column name="email" type="VARCHAR(32)"/>
+            <column name="first_name" type="VARCHAR(32)"/>
+            <column name="last_name" type="VARCHAR(32)"/>
+            <column name="role" type="VARCHAR(8)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2018-01-02--4-1" author="AlexVolochai" context="schemedata">
+        <addPrimaryKey tableName="users" columnNames="id" constraintName="users_pkey"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--4-2" author="AlexVolochai" context="schemedata">
+        <addUniqueConstraint tableName="users" columnNames="username" constraintName="users_username_key"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--4-3" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="users" columnName="username"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--4-4" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="users" columnName="password"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--4-5" author="AlexVolochai" context="schemedata">
+        <addUniqueConstraint tableName="users" columnNames="email" constraintName="users_email_key"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--4-6" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="users" columnName="first_name"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--4-7" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="users" columnName="last_name"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--4-8" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="users" columnName="role"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5" author="AlexVolochai" context="schemedata">
+        <createTable tableName="parcels">
+            <column name="id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_sender" type="UUID"/>
+            <column name="id_receiver" type="UUID"/>
+            <column name="id_branch_sender" type="INT"/>
+            <column name="id_branch_receiver" type="INT"/>
+            <column name="issue_date" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="status" type="VARCHAR(16)"/>
+            <column name="is_paid" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="price_total" type="numeric(10, 2)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-1" author="AlexVolochai" context="schemedata">
+        <addPrimaryKey tableName="parcels" columnNames="id" constraintName="parcels_pkey"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-2" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="parcels" columnName="id_sender"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-3" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="parcels" columnName="id_receiver"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-4" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="parcels" columnName="id_branch_sender"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-5" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="parcels" columnName="id_branch_receiver"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-6" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="parcels" columnName="issue_date"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-7" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="parcels" columnName="status"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-8" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="parcels" columnName="is_paid"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-9" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="parcels" columnName="price_total"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--5-10" author="AlexVolochai" context="schemedata">
+        <addForeignKeyConstraint baseColumnNames="id_branch_receiver" baseTableName="parcels"
+                                 constraintName="parcels_id_branch_receiver_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="CASCADE"
+                                 referencedColumnNames="id" referencedTableName="branches"/>
+    </changeSet>
+    <changeSet id="2018-01-02--5-11" author="AlexVolochai" context="schemedata">
+        <addForeignKeyConstraint baseColumnNames="id_branch_sender" baseTableName="parcels"
+                                 constraintName="parcels_id_branch_sender_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="CASCADE"
+                                 referencedColumnNames="id" referencedTableName="branches"/>
+    </changeSet>
+    <changeSet id="2018-01-02--5-12" author="AlexVolochai" context="schemedata">
+        <addForeignKeyConstraint baseColumnNames="id_receiver" baseTableName="parcels"
+                                 constraintName="parcels_id_receiver_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="CASCADE" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="2018-01-02--5-13" author="AlexVolochai" context="schemedata">
+        <addForeignKeyConstraint baseColumnNames="id_sender" baseTableName="parcels"
+                                 constraintName="parcels_id_sender_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="CASCADE" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--6" author="AlexVolochai" context="schemedata">
+        <createTable tableName="goods">
+            <column name="id" type="UUID"/>
+            <column name="id_parcel" type="UUID"/>
+            <column name="weight" type="numeric(7, 3)"/>
+            <column name="long" type="INT"/>
+            <column name="wight" type="INT"/>
+            <column name="height" type="INT"/>
+            <column name="assessed_value" type="numeric(8, 2)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2018-01-02--6-1" author="AlexVolochai" context="schemedata">
+        <addPrimaryKey tableName="goods" columnNames="id" constraintName="goods_pkey"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--6-2" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="goods" columnName="id_parcel"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--6-3" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="goods" columnName="weight"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--6-4" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="goods" columnName="long"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--6-5" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="goods" columnName="wight"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--6-6" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="goods" columnName="height"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--6-7" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="goods" columnName="assessed_value"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--6-8" author="AlexVolochai" context="schemedata">
+        <addForeignKeyConstraint baseColumnNames="id_parcel" baseTableName="goods" constraintName="goods_id_parcel_fkey"
+                                 deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="id" referencedTableName="parcels"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--7" author="AlexVolochai" context="schemedata">
+        <createTable tableName="deliveries">
+            <column name="id" type="UUID"/>
+            <column name="id_parcel" type="UUID"/>
+            <column name="is_delivered" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="id_city" type="INT"/>
+            <column name="street" type="VARCHAR(32)"/>
+            <column name="street_number" type="VARCHAR(8)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2018-01-02--7-1" author="AlexVolochai" context="schemedata">
+        <addPrimaryKey tableName="deliveries" columnNames="id" constraintName="deliveries_pkey"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--7-2" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="deliveries" columnName="id_parcel"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--7-3" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="deliveries" columnName="is_delivered"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--7-4" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="deliveries" columnName="id_city"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--7-5" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="deliveries" columnName="street"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--7-6" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="deliveries" columnName="street_number"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--7-7" author="AlexVolochai" context="schemedata">
+        <addForeignKeyConstraint baseColumnNames="id_city" baseTableName="deliveries"
+                                 constraintName="deliveries_id_city_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="CASCADE" referencedColumnNames="id"
+                                 referencedTableName="cities"/>
+    </changeSet>
+    <changeSet id="2018-01-02--7-8" author="AlexVolochai" context="schemedata">
+        <addForeignKeyConstraint baseColumnNames="id_parcel" baseTableName="deliveries"
+                                 constraintName="deliveries_id_parcel_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id"
+                                 referencedTableName="parcels"/>
+    </changeSet>
+
+</databaseChangeLog>
