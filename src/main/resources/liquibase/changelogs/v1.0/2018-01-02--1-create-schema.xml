@@ -33,6 +33,8 @@
             <column name="id" type="SERIAL" autoIncrement="true"/>
             <column name="id_country" type="INT"/>
             <column name="name" type="VARCHAR(32)"/>
+            <column name="latitude" type="numeric(10, 7)"/>
+            <column name="longitude" type="numeric(10, 7)"/>
             <column name="tariff" type="numeric(6, 2)"/>
         </createTable>
     </changeSet>
@@ -50,10 +52,18 @@
     </changeSet>
 
     <changeSet id="2018-01-02--2-4" author="AlexVolochai" context="schemedata">
-        <addNotNullConstraint tableName="cities" columnName="tariff"/>
+        <addNotNullConstraint tableName="cities" columnName="latitude"/>
     </changeSet>
 
     <changeSet id="2018-01-02--2-5" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="cities" columnName="longitude"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--2-6" author="AlexVolochai" context="schemedata">
+        <addNotNullConstraint tableName="cities" columnName="tariff"/>
+    </changeSet>
+
+    <changeSet id="2018-01-02--2-7" author="AlexVolochai" context="schemedata">
         <addForeignKeyConstraint baseColumnNames="id_country" baseTableName="cities"
                                  constraintName="cities_id_country_fkey" deferrable="false" initiallyDeferred="false"
                                  onDelete="RESTRICT" onUpdate="CASCADE" referencedColumnNames="id"
@@ -218,8 +228,8 @@
             <column name="id" type="UUID"/>
             <column name="id_parcel" type="UUID"/>
             <column name="weight" type="numeric(7, 3)"/>
-            <column name="long" type="INT"/>
-            <column name="wight" type="INT"/>
+            <column name="length" type="INT"/>
+            <column name="width" type="INT"/>
             <column name="height" type="INT"/>
             <column name="assessed_value" type="numeric(8, 2)"/>
         </createTable>
@@ -238,11 +248,11 @@
     </changeSet>
 
     <changeSet id="2018-01-02--6-4" author="AlexVolochai" context="schemedata">
-        <addNotNullConstraint tableName="goods" columnName="long"/>
+        <addNotNullConstraint tableName="goods" columnName="length"/>
     </changeSet>
 
     <changeSet id="2018-01-02--6-5" author="AlexVolochai" context="schemedata">
-        <addNotNullConstraint tableName="goods" columnName="wight"/>
+        <addNotNullConstraint tableName="goods" columnName="width"/>
     </changeSet>
 
     <changeSet id="2018-01-02--6-6" author="AlexVolochai" context="schemedata">
