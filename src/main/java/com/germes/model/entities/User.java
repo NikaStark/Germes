@@ -11,7 +11,7 @@ public class User implements Identified<UUID> {
     public static final String ID_COLUMN = "id";
     public static final String USERNAME_COLUMN = "username";
     public static final String PASSWORD_COLUMN = "password";
-    public static final String EMAIL_NUMBER_COLUMN = "email";
+    public static final String EMAIL_COLUMN = "email";
     public static final String FIRST_NAME_COLUMN = "first_name";
     public static final String LAST_NAME_COLUMN = "last_name";
     public static final String ROLE_COLUMN = "role";
