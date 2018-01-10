@@ -15,25 +15,25 @@ public class JDBCDaoFactory implements DaoFactory {
 
     private JDBCDaoFactory() {
         daoMap = new HashMap<>();
-        daoMap.put(CountryDao.class, new CountryDaoImpl());
+        daoMap.put(CountryDaoImpl.class, new CountryDaoImpl());
         LOGGER.info("Added implementation dao for " + CountryDao.class.getSimpleName());
 
-        daoMap.put(CityDao.class, new CityDaoImpl());
+        daoMap.put(CityDaoImpl.class, new CityDaoImpl());
         LOGGER.info("Added implementation dao for " + CityDao.class.getSimpleName());
 
-        daoMap.put(BranchDao.class, new BranchDaoImpl());
+        daoMap.put(BranchDaoImpl.class, new BranchDaoImpl());
         LOGGER.info("Added implementation dao for " + BranchDao.class.getSimpleName());
 
-        daoMap.put(UserDao.class, new UserDaoImpl());
+        daoMap.put(UserDaoImpl.class, new UserDaoImpl());
         LOGGER.info("Added implementation dao for " + UserDao.class.getSimpleName());
 
-        daoMap.put(ParcelDao.class, new ParcelDaoImpl());
+        daoMap.put(ParcelDaoImpl.class, new ParcelDaoImpl());
         LOGGER.info("Added implementation dao for " + ParcelDao.class.getSimpleName());
 
-        daoMap.put(GoodsDao.class, new GoodsDaoImpl());
+        daoMap.put(GoodsDaoImpl.class, new GoodsDaoImpl());
         LOGGER.info("Added implementation dao for " + GoodsDao.class.getSimpleName());
 
-        daoMap.put(DeliveryDao.class, new DeliveryDaoImpl());
+        daoMap.put(DeliveryDaoImpl.class, new DeliveryDaoImpl());
         LOGGER.info("Added implementation dao for " + DeliveryDao.class.getSimpleName());
     }
 
@@ -43,13 +43,13 @@ public class JDBCDaoFactory implements DaoFactory {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends GenericDao> T getDao(Class<T> daoEntityInterface) {
-        LOGGER.info("Get dao of interface " + daoEntityInterface.getSimpleName());
-        if (!daoMap.containsKey(daoEntityInterface)) {
-            LOGGER.warn("Dao object for " + daoEntityInterface + " not found.");
+    public <T extends GenericDao> T getDao(Class<T> daoEntityInterfaceImpl) {
+        LOGGER.info("Get dao of interface " + daoEntityInterfaceImpl.getSimpleName());
+        if (!daoMap.containsKey(daoEntityInterfaceImpl)) {
+            LOGGER.warn("Dao object for " + daoEntityInterfaceImpl + " not found.");
             return null; //Maybe throwing exception be better
         }
-        return (T) daoMap.get(daoEntityInterface);
+        return (T) daoMap.get(daoEntityInterfaceImpl);
     }
 
 }
