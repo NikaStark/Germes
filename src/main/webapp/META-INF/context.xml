@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <!-- Specify a JDBC datasource -->
+    <!--ssl=require in url is analogue of parameters ssl=true and sslFactory=org.postgresql.ssl.NonValidatingFactory-->
+    <Resource name="jdbc/germes"
+              auth="Container"
+              type="javax.sql.DataSource"
+
+              defaultAutoCommit="true"
+              defaultTransactionIsolation="READ_COMMITTED"
+              driverClassName="org.postgresql.Driver"
+              username="eeqwknavkujwer"
+              password="4448d51627a55426538de12bbf8327642880b1000b44a63b5fdbd0dd780ecab7"
+              maxActive="20"
+              maxIdle="4"
+              initialSize="10"
+              maxWaitMillis="10000"
+              removeAbandoned="true"
+              removeAbandonedTimeout="120"
+              url="jdbc:postgresql://ec2-54-228-251-254.eu-west-1.compute.amazonaws.com:5432/d9oei1snlq6kvc?sslmode=require"
+              connectionProperties="useUnicode=yes;characterEncoding=utf8;"
+            />
+
+
+</Context>
