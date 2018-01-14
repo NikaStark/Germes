@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class UserDaoImpl extends AbstractJDBCDao<User, UUID> implements UserDao<Connection> {
@@ -20,12 +21,35 @@ public class UserDaoImpl extends AbstractJDBCDao<User, UUID> implements UserDao<
         LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + User.ID_COLUMN + ", " + User.USERNAME_COLUMN + ", " + User.PASSWORD_COLUMN + ", " + User.EMAIL_COLUMN + ", " + User.FIRST_NAME_COLUMN + ", " + User.LAST_NAME_COLUMN + ", " + User.ROLE_COLUMN + " FROM " + User.TABLE_NAME;
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + User.ID_COLUMN + "=?";
-        SQL_INSERT = "INSERT INTO " + User.TABLE_NAME + " (" + User.ID_COLUMN + ", " + User.USERNAME_COLUMN + ", " + User.PASSWORD_COLUMN + ", " + User.EMAIL_COLUMN + ", " + User.FIRST_NAME_COLUMN + ", " + User.LAST_NAME_COLUMN + ", " + User.ROLE_COLUMN + ") VALUES (?, ?, ?, ?)";
+        SQL_INSERT = "INSERT INTO " + User.TABLE_NAME + " (" + User.ID_COLUMN + ", " + User.USERNAME_COLUMN + ", " + User.PASSWORD_COLUMN + ", " + User.EMAIL_COLUMN + ", " + User.FIRST_NAME_COLUMN + ", " + User.LAST_NAME_COLUMN + ", " + User.ROLE_COLUMN + ") VALUES (?, ?, ?, ?, ?, ?, ?)";
         SQL_UPDATE = "UPDATE " + User.TABLE_NAME + " SET " + User.USERNAME_COLUMN + "=?, " + User.PASSWORD_COLUMN + "=?, " + User.EMAIL_COLUMN + "=?, " + User.FIRST_NAME_COLUMN + "=?, " + User.LAST_NAME_COLUMN + "=?, " + User.ROLE_COLUMN + "=? WHERE " + User.ID_COLUMN + "=?";
         SQL_DELETE = "DELETE FROM " + User.TABLE_NAME + " WHERE " + User.ID_COLUMN + "=?";
     }
 
+    private String SQL_AUTHENTICATION = SQL_FIND_ALL + " WHERE " + User.USERNAME_COLUMN + "=?" + " AND " + User.PASSWORD_COLUMN + "=?";
+
     UserDaoImpl() {
+    }
+
+    @Override
+    public User authentication(String username, String password, Connection connection) throws PersistentException {
+        List<User> list;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_AUTHENTICATION)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            list = parseResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("Authentication with username=" + username, e);
+            throw new PersistentException(e);
+        }
+        if (Objects.isNull(list) || list.isEmpty()) {
+            return null;
+        }
+        if (list.size() > 1) {
+            LOGGER.warn("Received more than one record, with username=" + username);
+        }
+        return list.iterator().next();
     }
 
     @Override

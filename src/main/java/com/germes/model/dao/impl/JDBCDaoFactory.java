@@ -44,9 +44,9 @@ public class JDBCDaoFactory implements DaoFactory {
     @Override
     @SuppressWarnings("unchecked")
     public <T extends GenericDao> T getDao(Class<T> daoEntityInterfaceImpl) {
-        LOGGER.info("Get dao of interface " + daoEntityInterfaceImpl.getSimpleName());
+        LOGGER.info("Get dao implementation " + daoEntityInterfaceImpl.getSimpleName());
         if (!daoMap.containsKey(daoEntityInterfaceImpl)) {
-            LOGGER.warn("Dao object for " + daoEntityInterfaceImpl + " not found.");
+            LOGGER.warn("Dao instance of " + daoEntityInterfaceImpl.getSimpleName() + " not found.");
             return null; //Maybe throwing exception be better
         }
         return (T) daoMap.get(daoEntityInterfaceImpl);

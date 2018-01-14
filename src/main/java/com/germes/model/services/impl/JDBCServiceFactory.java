@@ -27,7 +27,7 @@ public class JDBCServiceFactory implements ServiceFactory {
         LOGGER.info("Added implementation service for " + BranchService.class.getSimpleName());
 
         servicesMap.put(UserServiceImpl.class, new UserServiceImpl(daoFactory.getDao(UserDaoImpl.class)));
-        LOGGER.info("Added service wrap,  implementation of " + UserService.class.getSimpleName());
+        LOGGER.info("Added implementation service for " + UserService.class.getSimpleName());
 
         servicesMap.put(ParcelServiceImpl.class, new ParcelServiceImpl(daoFactory.getDao(ParcelDaoImpl.class)));
         LOGGER.info("Added implementation service for " + ParcelService.class.getSimpleName());
@@ -46,9 +46,9 @@ public class JDBCServiceFactory implements ServiceFactory {
     @Override
     @SuppressWarnings("unchecked")
     public <T extends GenericService> T getService(Class<T> serviceEntityInterfaceImpl) {
-        LOGGER.info("Get service of interface " + serviceEntityInterfaceImpl);
+        LOGGER.info("Get service implementation " + serviceEntityInterfaceImpl.getSimpleName());
         if (!servicesMap.containsKey(serviceEntityInterfaceImpl)) {
-            LOGGER.warn("Service object for " + serviceEntityInterfaceImpl + " not found.");
+            LOGGER.warn("Service instance of " + serviceEntityInterfaceImpl.getSimpleName() + " not found.");
             return null; //Maybe throwing exception be better
         }
         return (T) servicesMap.get(serviceEntityInterfaceImpl);
