@@ -3,7 +3,11 @@ package com.germes.web.util;
 public enum Command {
 
     DEFAULT_CMD(""),
-    LOGIN_CMD("login");
+    LOGIN_CMD("login"),
+    AUTH_CMD("auth"),
+    REG_CMD("registration"),
+    REG_PAGE_CMD("registration_page"),
+    LOGOUT_CMD("logout");
 
     private String command;
 

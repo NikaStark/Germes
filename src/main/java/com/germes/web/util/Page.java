@@ -2,7 +2,10 @@ package com.germes.web.util;
 
 public enum Page {
 
-    HOME_PAGE("/WEB-INF/pages/home.jsp");
+    DEFAULT_PAGE("/WEB-INF/pages/index.jsp"),
+    HOME_PAGE("/WEB-INF/pages/home.jsp"),
+    LOGIN_PAGE("/WEB-INF/pages/login.jsp"),
+    REG_PAGE("/WEB-INF/pages/registration.jsp");
 
     private String path;
 
