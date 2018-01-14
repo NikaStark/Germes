@@ -16,8 +16,7 @@ public class Branch implements Identified<Integer> {
     public Branch() {
     }
 
-    public Branch(Integer id, Integer city, String street, String streetNumber) {
-        this.id = id;
+    public Branch(Integer city, String street, String streetNumber) {
         this.city = city;
         this.street = street;
         this.streetNumber = streetNumber;

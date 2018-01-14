@@ -14,8 +14,7 @@ public class Country implements Identified<Integer> {
     public Country() {
     }
 
-    public Country(Integer id, String name, Float tariff) {
-        this.id = id;
+    public Country(String name, Float tariff) {
         this.name = name;
         this.tariff = tariff;
     }

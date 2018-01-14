@@ -18,7 +18,7 @@ public class Parcel implements Identified<UUID> {
     public static final String IS_PAID_COLUMN = "is_paid";
     public static final String PRICE_TOTAL_COLUMN = "price_total";
 
-    private UUID id = new UUID(new Date().getTime(), -new Date().getTime());
+    private UUID id;
     private UUID sender;
     private UUID receiver;
     private Integer branchSender;
@@ -31,8 +31,8 @@ public class Parcel implements Identified<UUID> {
     public Parcel() {
     }
 
-    public Parcel(UUID id, UUID sender, UUID receiver, Integer branchSender, Integer branchReceiver, Date issueDate, Status status, Boolean isPaid, Float priceTotal) {
-        this.id = id;
+    public Parcel(UUID sender, UUID receiver, Integer branchSender, Integer branchReceiver, Date issueDate, Status status, Boolean isPaid, Float priceTotal) {
+        this.id = new UUID(new Date().getTime(), -new Date().getTime());
         this.sender = sender;
         this.receiver = receiver;
         this.branchSender = branchSender;

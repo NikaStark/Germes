@@ -16,9 +16,9 @@ public class User implements Identified<UUID> {
     public static final String LAST_NAME_COLUMN = "last_name";
     public static final String ROLE_COLUMN = "role";
 
-    public static final User GUEST_USER = new User(null, null, null, null, null, null, Role.GUEST);
+    public static final User GUEST_USER = new User(null, null, null, null, null, Role.GUEST);
 
-    private UUID id = new UUID(new Date().getTime(), -new Date().getTime());
+    private UUID id;
     private String username;
     private String password;
     private String email;
@@ -29,8 +29,8 @@ public class User implements Identified<UUID> {
     public User() {
     }
 
-    public User(UUID id, String username, String password, String email, String firstName, String lastName, Role role) {
-        this.id = id;
+    public User(String username, String password, String email, String firstName, String lastName, Role role) {
+        this.id = new UUID(new Date().getTime(), -new Date().getTime());
         this.username = username;
         this.password = password;
         this.email = email;

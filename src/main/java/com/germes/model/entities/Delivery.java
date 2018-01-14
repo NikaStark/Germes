@@ -13,7 +13,7 @@ public class Delivery implements Identified<UUID> {
     public static final String STREET_COLUMN = "street";
     public static final String STREET_NUMBER_COLUMN = "street_number";
 
-    private UUID id = new UUID(new Date().getTime(), -new Date().getTime());
+    private UUID id;
     private UUID parcel;
     private Boolean isDelivered;
     private Integer city;
@@ -23,8 +23,8 @@ public class Delivery implements Identified<UUID> {
     public Delivery() {
     }
 
-    public Delivery(UUID id, UUID parcel, Boolean isDelivered, Integer city, String street, String streetNumber) {
-        this.id = id;
+    public Delivery(UUID parcel, Boolean isDelivered, Integer city, String street, String streetNumber) {
+        this.id = new UUID(new Date().getTime(), -new Date().getTime());
         this.parcel = parcel;
         this.isDelivered = isDelivered;
         this.city = city;

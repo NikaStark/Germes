@@ -14,7 +14,7 @@ public class Goods implements Identified<UUID> {
     public static final String HEIGHT_COLUMN = "height";
     public static final String ASSESSED_VALUE_COLUMN = "assessed_value";
 
-    private UUID id = new UUID(new Date().getTime(), -new Date().getTime());
+    private UUID id;
     private UUID parcel;
     private Float weight;
     private Integer length;
@@ -25,8 +25,8 @@ public class Goods implements Identified<UUID> {
     public Goods() {
     }
 
-    public Goods(UUID id, UUID parcel, Float weight, Integer length, Integer width, Integer height, Float assessedValue) {
-        this.id = id;
+    public Goods(UUID parcel, Float weight, Integer length, Integer width, Integer height, Float assessedValue) {
+        this.id = new UUID(new Date().getTime(), -new Date().getTime());
         this.parcel = parcel;
         this.weight = weight;
         this.length = length;

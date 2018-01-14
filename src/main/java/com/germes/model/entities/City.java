@@ -20,8 +20,7 @@ public class City implements Identified<Integer> {
     public City() {
     }
 
-    public City(Integer id, Integer country, String name, Float latitude, Float longitude, Float tariff) {
-        this.id = id;
+    public City(Integer country, String name, Float latitude, Float longitude, Float tariff) {
         this.country = country;
         this.name = name;
         this.latitude = latitude;
