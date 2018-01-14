@@ -26,7 +26,8 @@ public class AuthorizationFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         User user = (User) httpRequest.getSession().getAttribute(Attribute.CURRENT_USER_ATR.getAttribute());
-        if (SecurityConf.valueOfByField((Command) request.getAttribute(Attribute.COMMAND_ATR.getAttribute()))
+        String uri = httpRequest.getRequestURI();
+        if (SecurityConf.valueOfByField(Command.valueOfByField(uri.substring(uri.lastIndexOf('/') + 1)))
                 .isAvailable(user.getRole())) {
             chain.doFilter(httpRequest, httpResponse);
         } else {
