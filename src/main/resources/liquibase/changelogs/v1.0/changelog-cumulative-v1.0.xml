@@ -8,5 +8,6 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="src/main/resources/liquibase/changelogs/v1.0/2018-01-02--1-create-schema.xml"/>
+    <include file="src/main/resources/liquibase/changelogs/v1.0/2018-01-13--1-init-data.xml"/>
 
 </databaseChangeLog>
