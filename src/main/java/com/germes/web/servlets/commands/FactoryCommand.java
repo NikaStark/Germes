@@ -9,6 +9,7 @@ public enum FactoryCommand {
     AUTH_CMD(Command.AUTH_CMD, new AuthCommand()),
     REG_CMD(Command.REG_CMD, new RegistrationCommand()),
     REG_PAGE_CMD(Command.REG_PAGE_CMD, new RegistrationPageCommand()),
+    HOME_PAGE_CMD(Command.HOME_PAGE_CMD, new HomePageCommand()),
     LOGOUT_CMD(Command.LOGOUT_CMD, new LogoutCommand());
 
     private Command commandName;

@@ -7,7 +7,6 @@ import com.germes.model.services.UserService;
 import com.germes.model.services.impl.UserServiceImpl;
 import com.germes.web.util.Attribute;
 import com.germes.web.util.Command;
-import com.germes.web.util.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +43,7 @@ public class AuthCommand implements ICommand {
         if (Objects.nonNull(currentUser)) {
             LOGGER.info("Successfully authentication, username: " + username);
             request.getSession().setAttribute(Attribute.CURRENT_USER_ATR.getAttribute(), currentUser);
-            request.getRequestDispatcher(Page.HOME_PAGE.getPath()).forward(request, response);
+            request.getRequestDispatcher(Command.HOME_PAGE_CMD.getCommand()).forward(request, response);
         } else {
             LOGGER.info("Wrong username or password");
             //TODO output message: wrong input

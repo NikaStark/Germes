@@ -9,6 +9,7 @@ public enum SecurityConf {
     AUTH_ACCESS(Command.AUTH_CMD, new Role[]{Role.GUEST}),
     REG_ACCESS(Command.REG_CMD, new Role[]{Role.GUEST}),
     REG_PAGE_ACCESS(Command.REG_PAGE_CMD, new Role[]{Role.GUEST}),
+    HOME_PAGE_ACCESS(Command.HOME_PAGE_CMD, new Role[]{Role.CLIENT, Role.MANAGER, Role.ADMIN}),
     LOGOUT_ACCESS(Command.LOGOUT_CMD, new Role[]{Role.CLIENT, Role.MANAGER, Role.ADMIN});
 
     private Command command;
