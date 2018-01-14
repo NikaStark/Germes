@@ -15,8 +15,8 @@ public class LoginCommand implements ICommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.info("Hi from login command");
-        request.getRequestDispatcher(Page.HOME_PAGE.getPath()).forward(request, response);
+        LOGGER.info("Executing login command");
+        request.getRequestDispatcher(Page.LOGIN_PAGE.getPath()).forward(request, response);
     }
 
 }

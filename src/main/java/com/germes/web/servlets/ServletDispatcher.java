@@ -27,7 +27,9 @@ public class ServletDispatcher extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Command command = (Command) req.getAttribute(Attribute.COMMAND_ATR.getAttribute());
+        String uri = req.getRequestURI();
+        Command command = Command.valueOfByField(uri.substring(uri.lastIndexOf('/') + 1));
+        req.setAttribute(Attribute.COMMAND_ATR.getAttribute(), command.getCommand());
         LOGGER.info("Dispatch control to command: " + command.getCommand());
         FactoryCommand.getCommand(command).execute(req, resp);
     }
