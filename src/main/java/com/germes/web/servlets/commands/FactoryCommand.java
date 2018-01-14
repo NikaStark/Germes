@@ -5,7 +5,11 @@ import com.germes.web.util.Command;
 public enum FactoryCommand {
 
     DEFAULT_CMD(Command.DEFAULT_CMD, new DefaultCommand()),
-    LOGIN_CMD(Command.LOGIN_CMD, new LoginCommand());
+    LOGIN_CMD(Command.LOGIN_CMD, new LoginCommand()),
+    AUTH_CMD(Command.AUTH_CMD, new AuthCommand()),
+    REG_CMD(Command.REG_CMD, new RegistrationCommand()),
+    REG_PAGE_CMD(Command.REG_PAGE_CMD, new RegistrationPageCommand()),
+    LOGOUT_CMD(Command.LOGOUT_CMD, new LogoutCommand());
 
     private Command commandName;
     private ICommand commandImpl;
