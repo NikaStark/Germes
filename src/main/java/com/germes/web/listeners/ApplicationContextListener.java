@@ -15,9 +15,15 @@ public class ApplicationContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        LOGGER.info("Context initialize start!");
         ServletContext servletContext = sce.getServletContext();
+        try {
+            Class.forName("com.germes.model.services.util.ConnectionAccess");
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("Not found class", e);
+        }
         servletContext.setAttribute(Attribute.SERVICE_FACTORY_ATR.getAttribute(), JDBCServiceFactory.getInstance());
-        LOGGER.info("Context initialize successfully!");
+        LOGGER.info("Context initialize finish successfully!");
     }
 
     @Override
