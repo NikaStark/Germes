@@ -4,12 +4,15 @@ public enum Attribute {
 
     SERVICE_FACTORY_ATR("serviceFactory"),
     CURRENT_USER_ATR("currentUser"),
+    ID_ATR("id"),
     USERNAME_ATR("username"),
     PASSWORD_ATR("password"),
     PASSWORD_REPEAT_ATR("passwordRepeat"),
     EMAIL_ATR("email"),
     FIRST_NAME_ATR("firstName"),
     LAST_NAME_ATR("lastName"),
+    USER_PROFILE_ATR("userProfile"),
+    PROFILE_FORM_ATR("profileForm"),
     COMMAND_ATR("cmd");
 
     private String attribute;

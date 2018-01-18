@@ -6,8 +6,10 @@ public enum Command {
     LOGIN_CMD("login"),
     AUTH_CMD("auth"),
     REG_CMD("registration"),
-    REG_PAGE_CMD("registration_page"),
+    REG_PAGE_CMD("registration"),
     HOME_PAGE_CMD("home"),
+    PROFILE_PAGE_CMD("profile"),
+    CHANGE_PROFILE_CMD("change_profile"),
     LOGOUT_CMD("logout");
 
     private String command;
