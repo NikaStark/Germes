@@ -9,4 +9,6 @@ public interface UserService extends GenericService<User, UUID> {
 
     User authentication(String username, String password) throws ServiceException;
 
+    void modify(User user) throws ServiceException;
+
 }
