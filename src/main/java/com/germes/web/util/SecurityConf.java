@@ -12,7 +12,8 @@ public enum SecurityConf {
     HOME_PAGE_ACCESS(Command.HOME_PAGE_CMD, new Role[]{Role.CLIENT, Role.MANAGER, Role.ADMIN}),
     PROFILE_PAGE_ACCESS(Command.PROFILE_PAGE_CMD, new Role[]{Role.CLIENT, Role.MANAGER, Role.ADMIN}),
     CHANGE_PROFILE_ACCESS(Command.CHANGE_PROFILE_CMD, new Role[]{Role.CLIENT, Role.MANAGER, Role.ADMIN}),
-    LOGOUT_ACCESS(Command.LOGOUT_CMD, new Role[]{Role.CLIENT, Role.MANAGER, Role.ADMIN});
+    LOGOUT_ACCESS(Command.LOGOUT_CMD, new Role[]{Role.CLIENT, Role.MANAGER, Role.ADMIN}),
+    TARIFF_ACCESS(Command.TARIFFS_CMD, new Role[]{Role.GUEST, Role.CLIENT, Role.MANAGER, Role.ADMIN});
 
     private Command command;
     private Role[] roles;

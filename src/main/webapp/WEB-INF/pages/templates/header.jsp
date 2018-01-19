@@ -17,6 +17,16 @@
 
     <body>
 
+        <form class="tariffs_form" action="${Command.TARIFFS_CMD.getCommand()}" method="post">
+            <input type="submit" value=<fmt:message key="header.label.tariffsButton"/>>
+        </form>
+
+        <c:if test="${sessionScope.get(Attribute.CURRENT_USER_ATR.getAttribute()).role != Role.GUEST}">
+            <form class="logout_form" action="${Command.LOGOUT_CMD.getCommand()}" method="post">
+                <input type="submit" value=<fmt:message key="header.label.logoutButton"/>>
+            </form>
+        </c:if>
+
         <form id="locale" class="navbar-search pull-right" method="post"
               action="${requestScope.get(Attribute.COMMAND_ATR.getAttribute())}">
             <c:forEach var="attribute" items="${requestScope.entrySet().toArray()}">
@@ -37,12 +47,6 @@
                 </option>
             </select>
         </form>
-
-        <c:if test="${sessionScope.get(Attribute.CURRENT_USER_ATR.getAttribute()).role != Role.GUEST}">
-            <form class="logout_form" action="${Command.LOGOUT_CMD.getCommand()}" method="post">
-                <input type="submit" value=<fmt:message key="header.label.logoutButton"/>>
-            </form>
-        </c:if>
 
     </body>
 </html>

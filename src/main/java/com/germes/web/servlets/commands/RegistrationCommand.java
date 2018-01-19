@@ -22,7 +22,7 @@ public class RegistrationCommand implements ICommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.info("Executing login command");
+        LOGGER.info("Executing registration command");
         String username = request.getParameter(Attribute.USERNAME_ATR.getAttribute());
         String password = request.getParameter(Attribute.PASSWORD_ATR.getAttribute());
         String passwordRepeat = request.getParameter(Attribute.PASSWORD_REPEAT_ATR.getAttribute());

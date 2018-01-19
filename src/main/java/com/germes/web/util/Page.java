@@ -6,7 +6,8 @@ public enum Page {
     HOME_PAGE("/WEB-INF/pages/home.jsp"),
     LOGIN_PAGE("/WEB-INF/pages/login.jsp"),
     REG_PAGE("/WEB-INF/pages/registration.jsp"),
-    PROFILE_PAGE("/WEB-INF/pages/profile.jsp");
+    PROFILE_PAGE("/WEB-INF/pages/profile.jsp"),
+    TARIFFS_PAGE("/WEB-INF/pages/tariffs.jsp");
 
     private String path;
 

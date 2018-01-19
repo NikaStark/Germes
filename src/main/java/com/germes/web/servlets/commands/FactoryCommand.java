@@ -12,6 +12,7 @@ public enum FactoryCommand {
     HOME_PAGE_CMD(Command.HOME_PAGE_CMD, new HomePageCommand()),
     PROFILE_PAGE_CMD(Command.PROFILE_PAGE_CMD, new ProfilePageCommand()),
     CHANGE_PROFILE_CMD(Command.CHANGE_PROFILE_CMD, new ChangeProfileCommand()),
+    TARIFFS_CMD(Command.TARIFFS_CMD, new TariffsCommand()),
     LOGOUT_CMD(Command.LOGOUT_CMD, new LogoutCommand());
 
     private Command commandName;
