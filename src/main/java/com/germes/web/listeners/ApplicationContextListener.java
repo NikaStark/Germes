@@ -28,7 +28,6 @@ public class ApplicationContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        sce.getServletContext().removeAttribute(Attribute.CURRENT_USER_ATR.getAttribute());
         LOGGER.info("Context destroyed successfully!");
     }
 
