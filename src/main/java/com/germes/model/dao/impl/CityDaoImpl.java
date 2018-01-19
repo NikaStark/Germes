@@ -3,6 +3,7 @@ package com.germes.model.dao.impl;
 import com.germes.exceptions.PersistentException;
 import com.germes.model.dao.CityDao;
 import com.germes.model.entities.City;
+import com.germes.model.entities.Country;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CityDaoImpl extends AbstractJDBCDao<City, Integer> implements CityDao<Connection> {
 
@@ -23,7 +25,26 @@ public class CityDaoImpl extends AbstractJDBCDao<City, Integer> implements CityD
         SQL_DELETE = "DELETE FROM " + City.TABLE_NAME + " WHERE " + City.ID_COLUMN + "=?";
     }
 
+    private String SQL_FIND_BY_COUNTRY = SQL_FIND_ALL + " WHERE " + City.COUNTRY_COLUMN + "=?";
+
     CityDaoImpl() {
+    }
+
+    @Override
+    public List<City> getAllByCountry(Country country, Connection connection) throws PersistentException {
+        List<City> list;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BY_COUNTRY)) {
+            preparedStatement.setObject(1, country.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            list = parseResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("getAllByCountry with country=" + country, e);
+            throw new PersistentException(e);
+        }
+        if (Objects.isNull(list) || list.isEmpty()) {
+            return null;
+        }
+        return list;
     }
 
     @Override

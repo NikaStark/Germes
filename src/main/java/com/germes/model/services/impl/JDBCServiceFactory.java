@@ -17,10 +17,11 @@ public class JDBCServiceFactory implements ServiceFactory {
 
     private JDBCServiceFactory(DaoFactory daoFactory) {
         servicesMap = new HashMap<>();
-        servicesMap.put(CountryService.class, new CountryServiceImpl(daoFactory.getDao(CountryDaoImpl.class)));
+        servicesMap.put(CountryServiceImpl.class, new CountryServiceImpl(daoFactory.getDao(CountryDaoImpl.class)));
         LOGGER.info("Added implementation service for " + CountryService.class.getSimpleName());
 
-        servicesMap.put(CityServiceImpl.class, new CityServiceImpl(daoFactory.getDao(CityDaoImpl.class)));
+        servicesMap.put(CityServiceImpl.class, new CityServiceImpl(daoFactory.getDao(CityDaoImpl.class),
+                daoFactory.getDao(CountryDaoImpl.class)));
         LOGGER.info("Added implementation service for " + CityService.class.getSimpleName());
 
         servicesMap.put(BranchServiceImpl.class, new BranchServiceImpl(daoFactory.getDao(BranchDaoImpl.class)));

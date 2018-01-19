@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CountryDaoImpl extends AbstractJDBCDao<Country, Integer> implements CountryDao<Connection> {
 
@@ -23,7 +24,29 @@ public class CountryDaoImpl extends AbstractJDBCDao<Country, Integer> implements
         SQL_DELETE = "DELETE FROM " + Country.TABLE_NAME + " WHERE " + Country.ID_COLUMN + "=?";
     }
 
+    private String SQL_FIND_BY_NAME = SQL_FIND_ALL + " WHERE " + Country.NAME_COLUMN + "=?";
+
     CountryDaoImpl() {
+    }
+
+    @Override
+    public Country getByName(String name, Connection connection) throws PersistentException {
+        List<Country> list;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BY_NAME)) {
+            preparedStatement.setObject(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            list = parseResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("getByName with name=" + name, e);
+            throw new PersistentException(e);
+        }
+        if (Objects.isNull(list) || list.isEmpty()) {
+            return null;
+        }
+        if (list.size() > 1) {
+            LOGGER.warn("Received more than one record, with name=" + name);
+        }
+        return list.iterator().next();
     }
 
     @Override
