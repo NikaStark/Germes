@@ -14,9 +14,14 @@
     <properties>
         <project.java.version>1.8</project.java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.servlet.version>3.1.0</project.servlet.version>
+        <project.jstl.version>1.2</project.jstl.version>
+        <project.jsp.version>2.0</project.jsp.version>
         <project.slf4j.version>1.7.25</project.slf4j.version>
         <project.postgresql.version>42.1.4</project.postgresql.version>
         <project.liquibase.version>3.5.3</project.liquibase.version>
+        <project.junit.version>4.12</project.junit.version>
+        <project.mockito.version>1.10.19</project.mockito.version>
     </properties>
 
     <dependencies>
@@ -25,7 +30,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <version>${project.servlet.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -33,14 +38,14 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${project.jstl.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.servlet/jsp-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.0</version>
+            <version>${project.jsp.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -73,6 +78,22 @@
             <artifactId>liquibase-core</artifactId>
             <version>${project.liquibase.version}</version>
             <!--<scope>test</scope> TODO: which scope needed-->
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${project.junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${project.mockito.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
