@@ -13,9 +13,15 @@ public enum Attribute {
     LAST_NAME_ATR("lastName"),
     USER_PROFILE_ATR("userProfile"),
     PROFILE_FORM_ATR("profileForm"),
+    NAVIGATION_FORM_ATR("navigationForm"),
     COUNTRY_ATR("country"),
     COUNTRIES_ATR("countries"),
     CITIES_ATR("cities"),
+    USERS_ATR("users"),
+    PARCELS_ATR("parcels"),
+    BRANCHES_ATR("branches"),
+    GOODS_ATR("goods"),
+    DELIVERIES_ATR("deliveries"),
     COMMAND_ATR("cmd");
 
     private String attribute;

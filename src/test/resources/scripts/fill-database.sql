@@ -25,7 +25,7 @@ INSERT INTO users VALUES
   ('db81c354-80f9-11e6-ae22-56b6b6499611', '19875', 'qazwsx', '@gmail', 'Eduard', 'Guseev', 'CLIENT'),
   ('db81c502-80f9-11e6-ae22-56b6b6499611', '19889', 'zimeeko', '@yahoo', 'Tichon', 'Egorov', 'CLIENT'),
   ('db81c67e-80f9-11e6-ae22-56b6b6499611', '19801', 'tribel', '@yandex', 'Avkensiy', 'Subotin', 'MANAGER'),
-  ('db81c818-80f9-11e6-ae22-56b6b6499611', '19900', 'isaiev', 'Gordeevich', 'Efim', 'Alkseev', 'MANAGER');
+  ('db81c818-80f9-11e6-ae22-56b6b6499611', '19900', 'isaiev', '@ukr', 'Efim', 'Alkseev', 'MANAGER');
 
 INSERT INTO parcels VALUES
   ('a0000a74-fd22-11e7-8be5-0ed5f89f718b', 'db81c084-80f9-11e6-ae22-56b6b6499611', 'db81c354-80f9-11e6-ae22-56b6b6499611',

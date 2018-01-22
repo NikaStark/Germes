@@ -22,6 +22,10 @@
         </form>
 
         <c:if test="${sessionScope.get(Attribute.CURRENT_USER_ATR.getAttribute()).role != Role.GUEST}">
+            <form class="profile_form" action="${Command.PROFILE_PAGE_CMD.getCommand()}" method="post">
+                <input type="submit" value=<fmt:message key="home.label.profileButton"/>>
+            </form>
+
             <form class="logout_form" action="${Command.LOGOUT_CMD.getCommand()}" method="post">
                 <input type="submit" value=<fmt:message key="header.label.logoutButton"/>>
             </form>
