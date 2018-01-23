@@ -12,6 +12,7 @@ public class Delivery implements Identified<UUID> {
     public static final String CITY_COLUMN = "id_city";
     public static final String STREET_COLUMN = "street";
     public static final String STREET_NUMBER_COLUMN = "street_number";
+    public static final String COUNT = "count";
 
     private UUID id;
     private UUID parcel;

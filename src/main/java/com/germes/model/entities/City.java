@@ -9,6 +9,7 @@ public class City implements Identified<Integer> {
     public static final String LATITUDE_COLUMN = "latitude";
     public static final String LONGITUDE_COLUMN = "longitude";
     public static final String TARIFF_COLUMN = "tariff";
+    public static final String COUNT = "count";
 
     private Integer id;
     private Integer country;

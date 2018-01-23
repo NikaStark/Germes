@@ -6,6 +6,7 @@ public class Country implements Identified<Integer> {
     public static final String ID_COLUMN = "id";
     public static final String NAME_COLUMN = "name";
     public static final String TARIFF_COLUMN = "tariff";
+    public static final String COUNT = "count";
 
     private Integer id;
     private String name;

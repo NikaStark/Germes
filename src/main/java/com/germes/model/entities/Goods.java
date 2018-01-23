@@ -13,6 +13,7 @@ public class Goods implements Identified<UUID> {
     public static final String WIDTH_COLUMN = "width";
     public static final String HEIGHT_COLUMN = "height";
     public static final String ASSESSED_VALUE_COLUMN = "assessed_value";
+    public static final String COUNT = "count";
 
     private UUID id;
     private UUID parcel;

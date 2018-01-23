@@ -17,6 +17,7 @@ public class Parcel implements Identified<UUID> {
     public static final String STATUS_COLUMN = "status";
     public static final String IS_PAID_COLUMN = "is_paid";
     public static final String PRICE_TOTAL_COLUMN = "price_total";
+    public static final String COUNT = "count";
 
     private UUID id;
     private UUID sender;

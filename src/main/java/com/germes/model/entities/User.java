@@ -15,6 +15,7 @@ public class User implements Identified<UUID> {
     public static final String FIRST_NAME_COLUMN = "first_name";
     public static final String LAST_NAME_COLUMN = "last_name";
     public static final String ROLE_COLUMN = "role";
+    public static final String COUNT = "count";
 
     public static final User GUEST_USER = new User(null, null, null, null, null, Role.GUEST);
 

@@ -7,6 +7,7 @@ public class Branch implements Identified<Integer> {
     public static final String CITY_COLUMN = "id_city";
     public static final String STREET_COLUMN = "street";
     public static final String STREET_NUMBER_COLUMN = "street_number";
+    public static final String COUNT = "count";
 
     private Integer id;
     private Integer city;
