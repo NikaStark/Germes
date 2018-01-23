@@ -19,6 +19,7 @@ public class DeliveryDaoImpl extends AbstractJDBCDao<Delivery, UUID> implements 
         LOGGER = LoggerFactory.getLogger(DeliveryDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + Delivery.ID_COLUMN + ", " + Delivery.PARCEL_COLUMN + ", " + Delivery.IS_DELIVERED_COLUMN + ", " + Delivery.CITY_COLUMN + ", " + Delivery.STREET_COLUMN + ", " + Delivery.STREET_NUMBER_COLUMN + " FROM " + Delivery.TABLE_NAME;
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + Delivery.ID_COLUMN + "=?";
+        SQL_GET_COUNT = "SELECT count(*) AS " + Delivery.COUNT + " FROM " + Delivery.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + Delivery.TABLE_NAME + " (" + Delivery.ID_COLUMN + ", " + Delivery.PARCEL_COLUMN + ", " + Delivery.IS_DELIVERED_COLUMN + ", " + Delivery.CITY_COLUMN + ", " + Delivery.STREET_COLUMN + ", " + Delivery.STREET_NUMBER_COLUMN + ") VALUES (?, ?, ?, ?, ?, ?)";
         SQL_UPDATE = "UPDATE " + Delivery.TABLE_NAME + " SET " + Delivery.PARCEL_COLUMN + "=?, " + Delivery.IS_DELIVERED_COLUMN + "=?, " + Delivery.CITY_COLUMN + "=?, " + Delivery.STREET_COLUMN + "=?, " + Delivery.STREET_NUMBER_COLUMN + "=? WHERE " + Delivery.ID_COLUMN + "=?";
         SQL_DELETE = "DELETE FROM " + Delivery.TABLE_NAME + " WHERE " + Delivery.ID_COLUMN + "=?";
@@ -51,6 +52,20 @@ public class DeliveryDaoImpl extends AbstractJDBCDao<Delivery, UUID> implements 
     @Override
     protected void parseResultSetGeneratedKeys(ResultSet generatedKeys, Delivery object) throws PersistentException {
         // This is mock, there is no need for this method because key for this entity generated on client side
+    }
+
+    @Override
+    protected int parseResultSetCount(ResultSet resultSet) throws PersistentException {
+        int count = 0;
+        try {
+            if (resultSet.next()) {
+                count = resultSet.getInt(Delivery.COUNT);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("parseResultSetCount ", e);
+            throw new PersistentException(e);
+        }
+        return count;
     }
 
     @Override

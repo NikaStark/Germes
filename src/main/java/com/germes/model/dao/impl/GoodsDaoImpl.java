@@ -19,6 +19,7 @@ public class GoodsDaoImpl extends AbstractJDBCDao<Goods, UUID> implements GoodsD
         LOGGER = LoggerFactory.getLogger(GoodsDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + Goods.ID_COLUMN + ", " + Goods.PARCEL_COLUMN + ", " + Goods.WEIGHT_COLUMN + ", " + Goods.LENGTH_COLUMN + ", " + Goods.WIDTH_COLUMN + ", " + Goods.HEIGHT_COLUMN + ", " + Goods.ASSESSED_VALUE_COLUMN + " FROM " + Goods.TABLE_NAME;
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + Goods.ID_COLUMN + "=?";
+        SQL_GET_COUNT = "SELECT count(*) AS " + Goods.COUNT + " FROM " + Goods.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + Goods.TABLE_NAME + " (" + Goods.ID_COLUMN + ", " + Goods.PARCEL_COLUMN + ", " + Goods.WEIGHT_COLUMN + ", " + Goods.LENGTH_COLUMN + ", " + Goods.WIDTH_COLUMN + ", " + Goods.HEIGHT_COLUMN + ", " + Goods.ASSESSED_VALUE_COLUMN + ") VALUES (?, ?, ?, ?, ?, ?, ?)";
         SQL_UPDATE = "UPDATE " + Goods.TABLE_NAME + " SET " + Goods.PARCEL_COLUMN + "=?, " + Goods.WEIGHT_COLUMN + "=?, " + Goods.LENGTH_COLUMN + "=?, " + Goods.WIDTH_COLUMN + "=?, " + Goods.HEIGHT_COLUMN + "=?, " + Goods.ASSESSED_VALUE_COLUMN + "=? WHERE " + Goods.ID_COLUMN + "=?";
         SQL_DELETE = "DELETE FROM " + Goods.TABLE_NAME + " WHERE " + Goods.ID_COLUMN + "=?";
@@ -52,6 +53,20 @@ public class GoodsDaoImpl extends AbstractJDBCDao<Goods, UUID> implements GoodsD
     @Override
     protected void parseResultSetGeneratedKeys(ResultSet generatedKeys, Goods object) throws PersistentException {
         // This is mock, there is no need for this method because key for this entity generated on client side
+    }
+
+    @Override
+    protected int parseResultSetCount(ResultSet resultSet) throws PersistentException {
+        int count = 0;
+        try {
+            if (resultSet.next()) {
+                count = resultSet.getInt(Goods.COUNT);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("parseResultSetCount ", e);
+            throw new PersistentException(e);
+        }
+        return count;
     }
 
     @Override

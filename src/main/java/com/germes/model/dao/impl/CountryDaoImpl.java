@@ -19,6 +19,7 @@ public class CountryDaoImpl extends AbstractJDBCDao<Country, Integer> implements
         LOGGER = LoggerFactory.getLogger(CountryDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + Country.ID_COLUMN + ", " + Country.NAME_COLUMN + ", " + Country.TARIFF_COLUMN + " FROM " + Country.TABLE_NAME;
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + Country.ID_COLUMN + "=?";
+        SQL_GET_COUNT = "SELECT count(*) AS " + Country.COUNT + " FROM " + Country.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + Country.TABLE_NAME + " (" + Country.NAME_COLUMN + ", " + Country.TARIFF_COLUMN + ") VALUES (?, ?)";
         SQL_UPDATE = "UPDATE " + Country.TABLE_NAME + " SET " + Country.NAME_COLUMN + "=?, " + Country.TARIFF_COLUMN + "=? WHERE " + Country.ID_COLUMN + "=?";
         SQL_DELETE = "DELETE FROM " + Country.TABLE_NAME + " WHERE " + Country.ID_COLUMN + "=?";
@@ -77,6 +78,20 @@ public class CountryDaoImpl extends AbstractJDBCDao<Country, Integer> implements
             LOGGER.error("parseResultSetGeneratedKeys ", e);
             throw new PersistentException(e);
         }
+    }
+
+    @Override
+    protected int parseResultSetCount(ResultSet resultSet) throws PersistentException {
+        int count = 0;
+        try {
+            if (resultSet.next()) {
+                count = resultSet.getInt(Country.COUNT);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("parseResultSetCount ", e);
+            throw new PersistentException(e);
+        }
+        return count;
     }
 
     @Override

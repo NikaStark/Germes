@@ -20,6 +20,7 @@ public class CityDaoImpl extends AbstractJDBCDao<City, Integer> implements CityD
         LOGGER = LoggerFactory.getLogger(CityDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + City.ID_COLUMN + ", " + City.COUNTRY_COLUMN + ", " + City.NAME_COLUMN + ", " + City.LATITUDE_COLUMN + ", " + City.LONGITUDE_COLUMN + ", " + City.TARIFF_COLUMN + " FROM " + City.TABLE_NAME;
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + City.ID_COLUMN + "=?";
+        SQL_GET_COUNT = "SELECT count(*) AS " + City.COUNT + " FROM " + City.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + City.TABLE_NAME + " (" + City.COUNTRY_COLUMN + ", " + City.NAME_COLUMN + ", " + City.LATITUDE_COLUMN + ", " + City.LONGITUDE_COLUMN + ", " + City.TARIFF_COLUMN + ") VALUES (?, ?, ?, ?, ?)";
         SQL_UPDATE = "UPDATE " + City.TABLE_NAME + " SET " + City.COUNTRY_COLUMN + "=?, " + City.NAME_COLUMN + "=?, " + City.LATITUDE_COLUMN + "=?, " + City.LONGITUDE_COLUMN + "=?, " + City.TARIFF_COLUMN + "=? WHERE " + City.ID_COLUMN + "=?";
         SQL_DELETE = "DELETE FROM " + City.TABLE_NAME + " WHERE " + City.ID_COLUMN + "=?";
@@ -78,6 +79,20 @@ public class CityDaoImpl extends AbstractJDBCDao<City, Integer> implements CityD
             LOGGER.error("parseResultSetGeneratedKeys ", e);
             throw new PersistentException(e);
         }
+    }
+
+    @Override
+    protected int parseResultSetCount(ResultSet resultSet) throws PersistentException {
+        int count = 0;
+        try {
+            if (resultSet.next()) {
+                count = resultSet.getInt(City.COUNT);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("parseResultSetCount ", e);
+            throw new PersistentException(e);
+        }
+        return count;
     }
 
     @Override

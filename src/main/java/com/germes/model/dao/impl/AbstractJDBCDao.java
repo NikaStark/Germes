@@ -14,7 +14,9 @@ import java.util.Objects;
 public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Serializable> implements GenericDao<T, PK, Connection> {
 
     protected String SQL_FIND_ALL;
+    protected String SQL_FIND_ALL_LIMIT = SQL_FIND_ALL + " LIMIT ?, ?";
     protected String SQL_FIND_BY_PK;
+    protected String SQL_GET_COUNT;
     protected String SQL_INSERT;
     protected String SQL_UPDATE;
     protected String SQL_DELETE;
@@ -50,6 +52,19 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Seria
             LOGGER.warn("Received more than one record, with key=" + key);
         }
         return list.iterator().next();
+    }
+
+    @Override
+    public int getCount(Connection connection) throws PersistentException {
+        int count;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_COUNT)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            count = parseResultSetCount(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("getCount", e);
+            throw new PersistentException(e);
+        }
+        return count;
     }
 
     @Override
@@ -91,9 +106,26 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Seria
         return Objects.nonNull(list) ? list : Collections.<T>emptyList();
     }
 
+    @Override
+    public List<T> getAllLimit(int skip, int limit, Connection connection) throws PersistentException {
+        List<T> list;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_LIMIT)) {
+            preparedStatement.setInt(1, skip);
+            preparedStatement.setInt(2, limit);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            list = parseResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("getAllLimit", e);
+            throw new PersistentException(e);
+        }
+        return Objects.nonNull(list) ? list : Collections.<T>emptyList();
+    }
+
     protected abstract List<T> parseResultSet(ResultSet resultSet) throws PersistentException;
 
     protected abstract void parseResultSetGeneratedKeys(ResultSet generatedKeys, T object) throws PersistentException;
+
+    protected abstract int parseResultSetCount(ResultSet resultSet) throws PersistentException;
 
     protected abstract void preparedStatementForInsert(PreparedStatement preparedStatement, T object) throws PersistentException;
 

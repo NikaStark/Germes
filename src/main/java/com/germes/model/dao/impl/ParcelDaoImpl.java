@@ -17,6 +17,7 @@ public class ParcelDaoImpl extends AbstractJDBCDao<Parcel, UUID> implements Parc
         LOGGER = LoggerFactory.getLogger(ParcelDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + Parcel.ID_COLUMN + ", " + Parcel.SENDER_COLUMN + ", " + Parcel.RECEIVER_COLUMN + ", " + Parcel.BRANCH_SENDER_COLUMN + ", " + Parcel.BRANCH_RECEIVER_COLUMN + ", " + Parcel.ISSUE_DATE_COLUMN + ", " + Parcel.STATUS_COLUMN + ", " + Parcel.IS_PAID_COLUMN + ", " + Parcel.PRICE_TOTAL_COLUMN + " FROM " + Parcel.TABLE_NAME;
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + Parcel.ID_COLUMN + "=?";
+        SQL_GET_COUNT = "SELECT count(*) AS " + Parcel.COUNT + " FROM " + Parcel.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + Parcel.TABLE_NAME + " (" + Parcel.ID_COLUMN + ", " + Parcel.SENDER_COLUMN + ", " + Parcel.RECEIVER_COLUMN + ", " + Parcel.BRANCH_SENDER_COLUMN + ", " + Parcel.BRANCH_RECEIVER_COLUMN + ", " + Parcel.ISSUE_DATE_COLUMN + ", " + Parcel.STATUS_COLUMN + ", " + Parcel.IS_PAID_COLUMN + ", " + Parcel.PRICE_TOTAL_COLUMN + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         SQL_UPDATE = "UPDATE " + Parcel.TABLE_NAME + " SET " + Parcel.SENDER_COLUMN + "=?, " + Parcel.RECEIVER_COLUMN + "=?, " + Parcel.BRANCH_SENDER_COLUMN + "=?, " + Parcel.BRANCH_RECEIVER_COLUMN + "=?, " + Parcel.ISSUE_DATE_COLUMN + "=?, " + Parcel.STATUS_COLUMN + "=?, " + Parcel.IS_PAID_COLUMN + "=?, " + Parcel.PRICE_TOTAL_COLUMN + "=? WHERE " + Parcel.ID_COLUMN + "=?";
         SQL_DELETE = "DELETE FROM " + Parcel.TABLE_NAME + " WHERE " + Parcel.ID_COLUMN + "=?";
@@ -52,6 +53,20 @@ public class ParcelDaoImpl extends AbstractJDBCDao<Parcel, UUID> implements Parc
     @Override
     protected void parseResultSetGeneratedKeys(ResultSet generatedKeys, Parcel object) throws PersistentException {
         // This is mock, there is no need for this method because key for this entity generated on client side
+    }
+
+    @Override
+    protected int parseResultSetCount(ResultSet resultSet) throws PersistentException {
+        int count = 0;
+        try {
+            if (resultSet.next()) {
+                count = resultSet.getInt(Parcel.COUNT);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("parseResultSetCount ", e);
+            throw new PersistentException(e);
+        }
+        return count;
     }
 
     @Override

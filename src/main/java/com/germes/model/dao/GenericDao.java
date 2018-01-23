@@ -12,10 +12,14 @@ public interface GenericDao<T extends Identified<PK>, PK extends Serializable, C
 
     T getByPK(PK key, Context context) throws PersistentException;
 
+    int getCount(Context context) throws PersistentException;
+
     void update(T object, Context context) throws PersistentException;
 
     void delete(T object, Context context) throws PersistentException;
 
     List<T> getAll(Context context) throws PersistentException;
+
+    List<T> getAllLimit(int skip, int limit, Context context) throws PersistentException;
 
 }
