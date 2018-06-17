@@ -18,6 +18,7 @@ public class CountryDaoImpl extends AbstractJDBCDao<Country, Integer> implements
     {
         LOGGER = LoggerFactory.getLogger(CountryDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + Country.ID_COLUMN + ", " + Country.NAME_COLUMN + ", " + Country.TARIFF_COLUMN + " FROM " + Country.TABLE_NAME;
+        SQL_FIND_ALL_LIMIT = SQL_FIND_ALL + " LIMIT ? OFFSET ?";
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + Country.ID_COLUMN + "=?";
         SQL_GET_COUNT = "SELECT count(*) AS " + Country.COUNT + " FROM " + Country.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + Country.TABLE_NAME + " (" + Country.NAME_COLUMN + ", " + Country.TARIFF_COLUMN + ") VALUES (?, ?)";

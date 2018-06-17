@@ -20,6 +20,6 @@ public interface GenericDao<T extends Identified<PK>, PK extends Serializable, C
 
     List<T> getAll(Context context) throws PersistentException;
 
-    List<T> getAllLimit(int skip, int limit, Context context) throws PersistentException;
+    List<T> getAllLimit(int limit, int offset, Context context) throws PersistentException;
 
 }

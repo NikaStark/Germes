@@ -22,6 +22,9 @@ public enum Attribute {
     BRANCHES_ATR("branches"),
     GOODS_ATR("goods"),
     DELIVERIES_ATR("deliveries"),
+    PAGE_ATR("page"),
+    PAGES_ATR("pages"),
+    MESSAGE_ATR("message"),
     COMMAND_ATR("cmd");
 
     private String attribute;

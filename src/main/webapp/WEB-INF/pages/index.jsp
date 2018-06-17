@@ -3,11 +3,13 @@
         <title>Index</title>
     </head>
     <body>
-
         <%@include file="templates/header.jsp" %>
 
-        <form name="login_form" action="${Command.LOGIN_CMD.getCommand()}" method="post">
-            <input type="submit" value="Login">
-        </form>
+        <div class="container">
+            <div class="row">
+                <h3><fmt:message key="index.label.welcomeWords"/></h3>
+            </div>
+        </div>
+
     </body>
 </html>

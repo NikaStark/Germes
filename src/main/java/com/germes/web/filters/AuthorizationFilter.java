@@ -27,12 +27,16 @@ public class AuthorizationFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         User user = (User) httpRequest.getSession().getAttribute(Attribute.CURRENT_USER_ATR.getAttribute());
         String uri = httpRequest.getRequestURI();
-        if (SecurityConf.valueOfByField(Command.valueOfByField(uri.substring(uri.lastIndexOf('/') + 1)))
-                .isAvailable(user.getRole())) {
+        if (uri.substring(httpRequest.getContextPath().length()).startsWith("/resources")) {
             chain.doFilter(httpRequest, httpResponse);
         } else {
-            LOGGER.info("The user is not have enough level access.");
-            httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            if (SecurityConf.valueOfByField(Command.valueOfByField(uri.substring(uri.lastIndexOf('/') + 1)))
+                    .isAvailable(user.getRole())) {
+                chain.doFilter(httpRequest, httpResponse);
+            } else {
+                LOGGER.info("The user is not have enough level access.");
+                httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            }
         }
     }
 

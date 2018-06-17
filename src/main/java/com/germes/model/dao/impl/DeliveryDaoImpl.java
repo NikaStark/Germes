@@ -3,21 +3,21 @@ package com.germes.model.dao.impl;
 import com.germes.exceptions.PersistentException;
 import com.germes.model.dao.DeliveryDao;
 import com.germes.model.entities.Delivery;
+import com.germes.model.entities.Parcel;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class DeliveryDaoImpl extends AbstractJDBCDao<Delivery, UUID> implements DeliveryDao<Connection> {
 
     {
         LOGGER = LoggerFactory.getLogger(DeliveryDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + Delivery.ID_COLUMN + ", " + Delivery.PARCEL_COLUMN + ", " + Delivery.IS_DELIVERED_COLUMN + ", " + Delivery.CITY_COLUMN + ", " + Delivery.STREET_COLUMN + ", " + Delivery.STREET_NUMBER_COLUMN + " FROM " + Delivery.TABLE_NAME;
+        SQL_FIND_ALL_LIMIT = SQL_FIND_ALL + " LIMIT ? OFFSET ?";
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + Delivery.ID_COLUMN + "=?";
         SQL_GET_COUNT = "SELECT count(*) AS " + Delivery.COUNT + " FROM " + Delivery.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + Delivery.TABLE_NAME + " (" + Delivery.ID_COLUMN + ", " + Delivery.PARCEL_COLUMN + ", " + Delivery.IS_DELIVERED_COLUMN + ", " + Delivery.CITY_COLUMN + ", " + Delivery.STREET_COLUMN + ", " + Delivery.STREET_NUMBER_COLUMN + ") VALUES (?, ?, ?, ?, ?, ?)";
@@ -25,7 +25,41 @@ public class DeliveryDaoImpl extends AbstractJDBCDao<Delivery, UUID> implements 
         SQL_DELETE = "DELETE FROM " + Delivery.TABLE_NAME + " WHERE " + Delivery.ID_COLUMN + "=?";
     }
 
+    private String SQL_QUERY_TO_PARCELS_TABLE = "SELECT " + Parcel.ID_COLUMN + " FROM " + Parcel.TABLE_NAME + " WHERE " + Parcel.RECEIVER_COLUMN + "=?";
+    private String SQL_FIND_ALL_LIMIT_WHERE_PK = SQL_FIND_ALL + " WHERE " + Delivery.PARCEL_COLUMN + " IN (" + SQL_QUERY_TO_PARCELS_TABLE + ") LIMIT ? OFFSET ?";
+    private String SQL_GET_COUNT_WHERE_PK = SQL_GET_COUNT + " WHERE " + Delivery.PARCEL_COLUMN + " IN (" + SQL_QUERY_TO_PARCELS_TABLE + ")";
+
     DeliveryDaoImpl() {
+    }
+
+    @Override
+    public int getCountWherePK(UUID key, Connection connection) throws PersistentException {
+        int count;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_COUNT_WHERE_PK)) {
+            preparedStatement.setObject(1, key);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            count = parseResultSetCount(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("getCountWherePK", e);
+            throw new PersistentException(e);
+        }
+        return count;
+    }
+
+    @Override
+    public List<Delivery> getAllLimitWherePK(UUID key, int limit, int offset, Connection connection) throws PersistentException {
+        List<Delivery> list;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_LIMIT_WHERE_PK)) {
+            preparedStatement.setObject(1, key);
+            preparedStatement.setInt(2, limit);
+            preparedStatement.setInt(3, offset);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            list = parseResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("getAllLimitWherePK", e);
+            throw new PersistentException(e);
+        }
+        return Objects.nonNull(list) ? list : Collections.<Delivery>emptyList();
     }
 
     @Override

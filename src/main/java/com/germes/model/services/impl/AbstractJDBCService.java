@@ -36,6 +36,12 @@ public abstract class AbstractJDBCService<T extends Identified<PK>, PK extends S
     }
 
     @Override
+    public int getCount() throws ServiceException {
+        LOGGER.info("Get count rows");
+        return ConnectionAccess.connectionWrap(dao::getCount);
+    }
+
+    @Override
     public void update(T object) throws ServiceException {
         LOGGER.info("Update " + object.getClass().getSimpleName());
         ConnectionAccess.connectionWrap(connection -> {
@@ -57,6 +63,12 @@ public abstract class AbstractJDBCService<T extends Identified<PK>, PK extends S
     public List<T> getAll() throws ServiceException {
         LOGGER.info("Get all");
         return ConnectionAccess.connectionWrap(dao::getAll);
+    }
+
+    @Override
+    public List<T> getAllLimit(int limit, int offset) throws ServiceException {
+        LOGGER.info("Get all limit");
+        return ConnectionAccess.connectionWrap(connection -> dao.getAllLimit(limit, offset, connection));
     }
 
 }

@@ -1,12 +1,9 @@
 package com.germes.web.servlets.commands;
 
-import com.germes.exceptions.ServiceException;
 import com.germes.model.entities.User;
 import com.germes.model.entities.enums.Role;
-import com.germes.model.services.*;
-import com.germes.model.services.impl.*;
 import com.germes.web.util.Attribute;
-import com.germes.web.util.Page;
+import com.germes.web.util.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,83 +21,40 @@ public class HomePageCommand implements ICommand {
         LOGGER.info("Executing home command");
         String navigationForm = request.getParameter(Attribute.NAVIGATION_FORM_ATR.getAttribute()) != null ?
                 request.getParameter(Attribute.NAVIGATION_FORM_ATR.getAttribute()) :
-                ((User)request.getSession().getAttribute(Attribute.CURRENT_USER_ATR.getAttribute())).getRole() == Role.ADMIN ?
-                "usersForm" :
-                "parcelsForm";
+                ((User) request.getSession().getAttribute(Attribute.CURRENT_USER_ATR.getAttribute())).getRole() == Role.ADMIN ?
+                        "usersForm" :
+                        "parcelsForm";
         request.setAttribute(Attribute.NAVIGATION_FORM_ATR.getAttribute(), navigationForm);
         switch (navigationForm) {
             case "usersForm": {
-                UserService userService = ((ServiceFactory) request.getServletContext()
-                        .getAttribute(Attribute.SERVICE_FACTORY_ATR.getAttribute())).getService(UserServiceImpl.class);
-                try {
-                    request.setAttribute(Attribute.USERS_ATR.getAttribute(), userService.getAll());
-                } catch (ServiceException e) {
-                    e.printStackTrace(); //TODO
-                }
+                request.getRequestDispatcher(Command.GET_LIST_USERS_CMD.getCommand()).forward(request, response);
                 break;
             }
             case "branchesForm": {
-                BranchService branchService = ((ServiceFactory) request.getServletContext()
-                        .getAttribute(Attribute.SERVICE_FACTORY_ATR.getAttribute())).getService(BranchServiceImpl.class);
-                try {
-                    request.setAttribute(Attribute.BRANCHES_ATR.getAttribute(), branchService.getAll());
-                } catch (ServiceException e) {
-                    e.printStackTrace(); //TODO
-                }
+                request.getRequestDispatcher(Command.GET_LIST_BRANCHES_CMD.getCommand()).forward(request, response);
                 break;
             }
             case "citiesForm": {
-                CityService cityService = ((ServiceFactory) request.getServletContext()
-                        .getAttribute(Attribute.SERVICE_FACTORY_ATR.getAttribute())).getService(CityServiceImpl.class);
-                try {
-                    request.setAttribute(Attribute.CITIES_ATR.getAttribute(), cityService.getAll());
-                } catch (ServiceException e) {
-                    e.printStackTrace(); //TODO
-                }
+                request.getRequestDispatcher(Command.GET_LIST_CITIES_CMD.getCommand()).forward(request, response);
                 break;
             }
             case "countriesForm": {
-                CountryService countryService = ((ServiceFactory) request.getServletContext()
-                        .getAttribute(Attribute.SERVICE_FACTORY_ATR.getAttribute())).getService(CountryServiceImpl.class);
-                try {
-                    request.setAttribute(Attribute.COUNTRIES_ATR.getAttribute(), countryService.getAll());
-                } catch (ServiceException e) {
-                    e.printStackTrace(); //TODO
-                }
+                request.getRequestDispatcher(Command.GET_LIST_COUNTRIES_CMD.getCommand()).forward(request, response);
                 break;
             }
             case "parcelsForm": {
-                ParcelService parcelService = ((ServiceFactory) request.getServletContext()
-                        .getAttribute(Attribute.SERVICE_FACTORY_ATR.getAttribute())).getService(ParcelServiceImpl.class);
-                try {
-                    request.setAttribute(Attribute.PARCELS_ATR.getAttribute(), parcelService.getAll());
-                } catch (ServiceException e) {
-                    e.printStackTrace(); //TODO
-                }
+                request.getRequestDispatcher(Command.GET_LIST_PARCELS_CMD.getCommand()).forward(request, response);
                 break;
             }
             case "goodsForm": {
-                GoodsService goodsService = ((ServiceFactory) request.getServletContext()
-                        .getAttribute(Attribute.SERVICE_FACTORY_ATR.getAttribute())).getService(GoodsServiceImpl.class);
-                try {
-                    request.setAttribute(Attribute.GOODS_ATR.getAttribute(), goodsService.getAll());
-                } catch (ServiceException e) {
-                    e.printStackTrace(); //TODO
-                }
+                request.getRequestDispatcher(Command.GET_LIST_GOODS_CMD.getCommand()).forward(request, response);
                 break;
             }
             case "deliveriesForm": {
-                DeliveryService deliveryService = ((ServiceFactory) request.getServletContext()
-                        .getAttribute(Attribute.SERVICE_FACTORY_ATR.getAttribute())).getService(DeliveryServiceImpl.class);
-                try {
-                    request.setAttribute(Attribute.DELIVERIES_ATR.getAttribute(), deliveryService.getAll());
-                } catch (ServiceException e) {
-                    e.printStackTrace(); //TODO
-                }
+                request.getRequestDispatcher(Command.GET_LIST_DELIVERIES_CMD.getCommand()).forward(request, response);
                 break;
             }
         }
-        request.getRequestDispatcher(Page.HOME_PAGE.getPath()).forward(request, response);
     }
 
 }

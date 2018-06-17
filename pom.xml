@@ -21,6 +21,7 @@
         <project.postgresql.version>42.1.4</project.postgresql.version>
         <project.liquibase.version>3.5.3</project.liquibase.version>
         <project.junit.version>4.12</project.junit.version>
+        <project.h2.version>1.4.196</project.h2.version>
         <project.mockito.version>1.10.19</project.mockito.version>
     </properties>
 
@@ -88,6 +89,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
         <dependency>
             <groupId>org.mockito</groupId>
@@ -123,16 +132,36 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-Dfile.encoding=UTF8</argLine>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.5.3</version>
-                <configuration>
-                    <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
-                </configuration>
                 <executions>
                     <execution>
-                        <!--process-test-resources-->
-                        <phase>process-resources</phase>
+                        <id>Product</id>
+                        <configuration>
+                            <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
+                            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                        </configuration>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>Testing</id>
+                        <configuration>
+                            <propertyFile>src/test/resources/liquibase/liquibase.properties</propertyFile>
+                            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                        </configuration>
+                        <phase>generate-test-resources</phase>
                         <goals>
                             <goal>update</goal>
                         </goals>

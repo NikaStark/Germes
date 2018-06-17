@@ -2,7 +2,6 @@ package com.germes.web.servlets.commands;
 
 import com.germes.model.entities.User;
 import com.germes.web.util.Attribute;
-import com.germes.web.util.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +18,7 @@ public class LogoutCommand implements ICommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOGGER.info("Executing logout command");
         request.getSession().setAttribute(Attribute.CURRENT_USER_ATR.getAttribute(), User.GUEST_USER);
-        request.getRequestDispatcher(Page.DEFAULT_PAGE.getPath()).forward(request, response);
+        response.sendRedirect(request.getContextPath());
     }
 
 }

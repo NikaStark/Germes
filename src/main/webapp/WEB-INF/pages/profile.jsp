@@ -6,47 +6,58 @@
 
         <%@include file="templates/header.jsp" %>
 
-        <h1><fmt:message key="profile.label.title"/></h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
 
-        <h3><fmt:message key="profile.label.changeInformation"/></h3>
-        <form class="form-info" action="${Command.CHANGE_PROFILE_CMD.getCommand()}" method="post">
-            <fmt:message key="profile.label.username"/> <br/>
-            <input type="text" class="form-control input-lg" name="${Attribute.USERNAME_ATR.getAttribute()}"
-                   value="${requestScope.get(Attribute.USERNAME_ATR.getAttribute())}" required/><br/>
+                    <h1><fmt:message key="profile.label.title"/></h1>
 
-            <fmt:message key="profile.label.email"/> <br/>
-            <input type="text" class="form-control input-lg" name="${Attribute.EMAIL_ATR.getAttribute()}"
-                   value="${requestScope.get(Attribute.EMAIL_ATR.getAttribute())}" required/><br/>
+                    <h3><fmt:message key="profile.label.changeInformation"/></h3>
 
-            <fmt:message key="profile.label.firstName"/> <br/>
-            <input type="text" class="form-control input-lg" name="${Attribute.FIRST_NAME_ATR.getAttribute()}"
-                   value="${requestScope.get(Attribute.FIRST_NAME_ATR.getAttribute())}" required/> <br/>
+                    <form class="form-info" action="${Command.CHANGE_PROFILE_CMD.getCommand()}" method="post">
+                        <label><fmt:message key="profile.label.username"/>:</label>
+                        <input type="text" class="form-control" name="${Attribute.USERNAME_ATR.getAttribute()}"
+                               value="<c:out value="${requestScope.get(Attribute.USERNAME_ATR.getAttribute())}"/>" required/>
 
-            <fmt:message key="profile.label.lastName"/> <br/>
-            <input type="text" class="form-control input-lg" name="${Attribute.LAST_NAME_ATR.getAttribute()}"
-                   value="${requestScope.get(Attribute.LAST_NAME_ATR.getAttribute())}" required/><br/>
+                        <label><fmt:message key="profile.label.email"/>:</label>
+                        <input type="text" class="form-control" name="${Attribute.EMAIL_ATR.getAttribute()}"
+                               value="<c:out value="${requestScope.get(Attribute.EMAIL_ATR.getAttribute())}"/>" required/>
 
-            <input type="hidden" name="${Attribute.ID_ATR.getAttribute()}" value="${requestScope.get(Attribute.ID_ATR.getAttribute())}"/>
-            <input type="hidden" name="${Attribute.PROFILE_FORM_ATR.getAttribute()}" value="formInfo"/>
-            <input type="submit" value=<fmt:message key="profile.label.submitButton"/>>
-        </form>
+                        <label><fmt:message key="profile.label.firstName"/>:</label>
+                        <input type="text" class="form-control" name="${Attribute.FIRST_NAME_ATR.getAttribute()}"
+                               value="<c:out value="${requestScope.get(Attribute.FIRST_NAME_ATR.getAttribute())}"/>" required/>
 
-        <h3><fmt:message key="profile.label.changePassword"/></h3>
-        <form class="form-pass" action="${Command.CHANGE_PROFILE_CMD.getCommand()}" method="post">
+                        <label><fmt:message key="profile.label.lastName"/>:</label>
+                        <input type="text" class="form-control" name="${Attribute.LAST_NAME_ATR.getAttribute()}"
+                               value="<c:out value="${requestScope.get(Attribute.LAST_NAME_ATR.getAttribute())}"/>" required/>
 
-            <fmt:message key="profile.label.password"/> <br/>
-            <input type="password" class="form-control input-lg" name="${Attribute.PASSWORD_ATR.getAttribute()}"
-                   required/> <br/>
+                        <input type="hidden" name="${Attribute.ID_ATR.getAttribute()}"
+                               value="${requestScope.get(Attribute.ID_ATR.getAttribute())}"/>
+                        <input type="hidden" name="${Attribute.PROFILE_FORM_ATR.getAttribute()}" value="formInfo"/><br/>
+                        <input type="submit" class="btn btn-success" value=<fmt:message key="profile.label.submitButton"/>>
+                    </form>
 
-            <fmt:message key="profile.label.passwordRepeat"/> <br/>
-            <input type="password" class="form-control input-lg" name="${Attribute.PASSWORD_REPEAT_ATR.getAttribute()}"
-                   required/> <br/>
+                    <h3><fmt:message key="profile.label.changePassword"/></h3>
 
-            <input type="hidden" name="${Attribute.ID_ATR.getAttribute()}" value="${requestScope.get(Attribute.ID_ATR.getAttribute())}"/>
-            <input type="hidden" name="${Attribute.PROFILE_FORM_ATR.getAttribute()}" value="formPass"/>
-            <input type="submit" value=<fmt:message key="profile.label.submitButton"/>>
-        </form>
+                    <form class="form-pass" action="${Command.CHANGE_PROFILE_CMD.getCommand()}" method="post">
+                        <label><fmt:message key="profile.label.password"/>:</label>
+                        <input type="password" class="form-control" name="${Attribute.PASSWORD_ATR.getAttribute()}"
+                               required/>
 
+                        <label><fmt:message key="profile.label.passwordRepeat"/>:</label>
+                        <input type="password" class="form-control"
+                               name="${Attribute.PASSWORD_REPEAT_ATR.getAttribute()}"
+                               required/>
+
+                        <input type="hidden" name="${Attribute.ID_ATR.getAttribute()}"
+                               value="${requestScope.get(Attribute.ID_ATR.getAttribute())}"/>
+                        <input type="hidden" name="${Attribute.PROFILE_FORM_ATR.getAttribute()}" value="formPass"/><br/>
+                        <input type="submit" class="btn btn-success" value=<fmt:message key="profile.label.submitButton"/>>
+                    </form>
+
+                </div>
+            </div>
+        </div>
 
     </body>
 </html>

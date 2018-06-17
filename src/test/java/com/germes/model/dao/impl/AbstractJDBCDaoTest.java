@@ -1,9 +1,6 @@
 package com.germes.model.dao.impl;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,13 +24,19 @@ public class AbstractJDBCDaoTest {
     public static void setUpBeforeClass() throws Exception {
         Properties properties = new Properties();
         try {
+//            Class.forName("org.hsqldb.jdbc.JDBCDriver");
             properties.load(new FileReader(new File("src/test/resources/db.properties")));
-            connection = DriverManager.getConnection(properties.getProperty("url"), properties);
+            connection = DriverManager.getConnection(properties.getProperty("db_connection"), properties);
             logger.info("Connection established successfully!");
+//            executeSqlScript(connection, new File("src/test/resources/scripts/init-schema.sql"));
+//            logger.info("Schema created successfully!");
         } catch (IOException e) {
-            logger.warn("Not found file - db.properties!");
+            logger.error("Not found file - db.properties!");
         } catch (SQLException e) {
-            logger.warn("Connection established failed!");
+            logger.error("Connection established failed!");
+            logger.error(e.getMessage());
+//        } catch (ClassNotFoundException e) {
+//            logger.error("Driver not found!");
         }
     }
 
@@ -59,7 +62,7 @@ public class AbstractJDBCDaoTest {
         logger.info("Tables cleared successfully!");
     }
 
-    private void executeSqlScript(Connection connection, File inputFile) {
+    private static void executeSqlScript(Connection connection, File inputFile) {
         String delimiter = ";";
         try (Scanner scanner = new Scanner(inputFile).useDelimiter(delimiter);
              Statement statement = connection.createStatement()) {
@@ -70,6 +73,7 @@ public class AbstractJDBCDaoTest {
             logger.warn("Not found file [" + inputFile.getName() + "]");
         } catch (SQLException e) {
             logger.warn("SQLException at run script [" + inputFile.getName() + "]");
+            logger.warn(e.getMessage());
         }
     }
 

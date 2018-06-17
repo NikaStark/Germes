@@ -11,7 +11,14 @@ public enum Command {
     PROFILE_PAGE_CMD("profile"),
     CHANGE_PROFILE_CMD("change_profile"),
     LOGOUT_CMD("logout"),
-    TARIFFS_CMD("tariffs");
+    TARIFFS_CMD("tariffs"),
+    GET_LIST_USERS_CMD("get_users"),
+    GET_LIST_BRANCHES_CMD("get_branches"),
+    GET_LIST_CITIES_CMD("get_cities"),
+    GET_LIST_COUNTRIES_CMD("get_countries"),
+    GET_LIST_PARCELS_CMD("get_parcels"),
+    GET_LIST_GOODS_CMD("get_goods"),
+    GET_LIST_DELIVERIES_CMD("get_deliveries");
 
     private String command;
 

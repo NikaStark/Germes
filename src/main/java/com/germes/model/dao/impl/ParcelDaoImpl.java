@@ -7,15 +7,14 @@ import com.germes.model.entities.enums.Status;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ParcelDaoImpl extends AbstractJDBCDao<Parcel, UUID> implements ParcelDao<Connection> {
 
     {
         LOGGER = LoggerFactory.getLogger(ParcelDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + Parcel.ID_COLUMN + ", " + Parcel.SENDER_COLUMN + ", " + Parcel.RECEIVER_COLUMN + ", " + Parcel.BRANCH_SENDER_COLUMN + ", " + Parcel.BRANCH_RECEIVER_COLUMN + ", " + Parcel.ISSUE_DATE_COLUMN + ", " + Parcel.STATUS_COLUMN + ", " + Parcel.IS_PAID_COLUMN + ", " + Parcel.PRICE_TOTAL_COLUMN + " FROM " + Parcel.TABLE_NAME;
+        SQL_FIND_ALL_LIMIT = SQL_FIND_ALL + " LIMIT ? OFFSET ?";
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + Parcel.ID_COLUMN + "=?";
         SQL_GET_COUNT = "SELECT count(*) AS " + Parcel.COUNT + " FROM " + Parcel.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + Parcel.TABLE_NAME + " (" + Parcel.ID_COLUMN + ", " + Parcel.SENDER_COLUMN + ", " + Parcel.RECEIVER_COLUMN + ", " + Parcel.BRANCH_SENDER_COLUMN + ", " + Parcel.BRANCH_RECEIVER_COLUMN + ", " + Parcel.ISSUE_DATE_COLUMN + ", " + Parcel.STATUS_COLUMN + ", " + Parcel.IS_PAID_COLUMN + ", " + Parcel.PRICE_TOTAL_COLUMN + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -23,7 +22,40 @@ public class ParcelDaoImpl extends AbstractJDBCDao<Parcel, UUID> implements Parc
         SQL_DELETE = "DELETE FROM " + Parcel.TABLE_NAME + " WHERE " + Parcel.ID_COLUMN + "=?";
     }
 
+    private String SQL_FIND_ALL_LIMIT_WHERE_PK = SQL_FIND_ALL + " WHERE " + Parcel.RECEIVER_COLUMN + "=?" + " LIMIT ? OFFSET ?";
+    private String SQL_GET_COUNT_WHERE_PK = SQL_GET_COUNT + " WHERE " + Parcel.RECEIVER_COLUMN + "=?";
+
     ParcelDaoImpl() {
+    }
+
+    @Override
+    public int getCountWherePK(UUID key, Connection connection) throws PersistentException {
+        int count;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_COUNT_WHERE_PK)) {
+            preparedStatement.setObject(1, key);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            count = parseResultSetCount(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("getCountWherePK", e);
+            throw new PersistentException(e);
+        }
+        return count;
+    }
+
+    @Override
+    public List<Parcel> getAllLimitWherePK(UUID key, int limit, int offset, Connection connection) throws PersistentException {
+        List<Parcel> list;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_LIMIT_WHERE_PK)) {
+            preparedStatement.setObject(1, key);
+            preparedStatement.setInt(2, limit);
+            preparedStatement.setInt(3, offset);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            list = parseResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("getAllLimitWherePK", e);
+            throw new PersistentException(e);
+        }
+        return Objects.nonNull(list) ? list : Collections.<Parcel>emptyList();
     }
 
     @Override

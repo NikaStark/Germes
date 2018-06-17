@@ -14,7 +14,7 @@ import java.util.Objects;
 public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Serializable> implements GenericDao<T, PK, Connection> {
 
     protected String SQL_FIND_ALL;
-    protected String SQL_FIND_ALL_LIMIT = SQL_FIND_ALL + " LIMIT ?, ?";
+    protected String SQL_FIND_ALL_LIMIT;
     protected String SQL_FIND_BY_PK;
     protected String SQL_GET_COUNT;
     protected String SQL_INSERT;
@@ -107,11 +107,11 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Seria
     }
 
     @Override
-    public List<T> getAllLimit(int skip, int limit, Connection connection) throws PersistentException {
+    public List<T> getAllLimit(int limit, int offset, Connection connection) throws PersistentException {
         List<T> list;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_LIMIT)) {
-            preparedStatement.setInt(1, skip);
-            preparedStatement.setInt(2, limit);
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
             ResultSet resultSet = preparedStatement.executeQuery();
             list = parseResultSet(resultSet);
         } catch (SQLException e) {

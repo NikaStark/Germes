@@ -12,10 +12,14 @@ public interface GenericService<T extends Identified<PK>, PK extends Serializabl
 
     T getByPK(PK key) throws ServiceException;
 
+    int getCount() throws ServiceException;
+
     void update(T object) throws ServiceException;
 
     void delete(T object) throws ServiceException;
 
     List<T> getAll() throws ServiceException;
+
+    List<T> getAllLimit(int limit, int offset) throws ServiceException;
 
 }

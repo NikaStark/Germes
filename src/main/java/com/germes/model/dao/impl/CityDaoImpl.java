@@ -19,6 +19,7 @@ public class CityDaoImpl extends AbstractJDBCDao<City, Integer> implements CityD
     {
         LOGGER = LoggerFactory.getLogger(CityDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + City.ID_COLUMN + ", " + City.COUNTRY_COLUMN + ", " + City.NAME_COLUMN + ", " + City.LATITUDE_COLUMN + ", " + City.LONGITUDE_COLUMN + ", " + City.TARIFF_COLUMN + " FROM " + City.TABLE_NAME;
+        SQL_FIND_ALL_LIMIT = SQL_FIND_ALL + " LIMIT ? OFFSET ?";
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + City.ID_COLUMN + "=?";
         SQL_GET_COUNT = "SELECT count(*) AS " + City.COUNT + " FROM " + City.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + City.TABLE_NAME + " (" + City.COUNTRY_COLUMN + ", " + City.NAME_COLUMN + ", " + City.LATITUDE_COLUMN + ", " + City.LONGITUDE_COLUMN + ", " + City.TARIFF_COLUMN + ") VALUES (?, ?, ?, ?, ?)";

@@ -20,6 +20,7 @@ public class UserDaoImpl extends AbstractJDBCDao<User, UUID> implements UserDao<
     {
         LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + User.ID_COLUMN + ", " + User.USERNAME_COLUMN + ", " + User.PASSWORD_COLUMN + ", " + User.EMAIL_COLUMN + ", " + User.FIRST_NAME_COLUMN + ", " + User.LAST_NAME_COLUMN + ", " + User.ROLE_COLUMN + " FROM " + User.TABLE_NAME;
+        SQL_FIND_ALL_LIMIT = SQL_FIND_ALL + " LIMIT ? OFFSET ?";
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + User.ID_COLUMN + "=?";
         SQL_GET_COUNT = "SELECT count(*) AS " + User.COUNT + " FROM " + User.TABLE_NAME;
         SQL_INSERT = "INSERT INTO " + User.TABLE_NAME + " (" + User.ID_COLUMN + ", " + User.USERNAME_COLUMN + ", " + User.PASSWORD_COLUMN + ", " + User.EMAIL_COLUMN + ", " + User.FIRST_NAME_COLUMN + ", " + User.LAST_NAME_COLUMN + ", " + User.ROLE_COLUMN + ") VALUES (?, ?, ?, ?, ?, ?, ?)";

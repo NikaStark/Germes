@@ -17,9 +17,10 @@ public class BranchDaoImpl extends AbstractJDBCDao<Branch, Integer> implements B
     {
         LOGGER = LoggerFactory.getLogger(BranchDaoImpl.class);
         SQL_FIND_ALL = "SELECT " + Branch.ID_COLUMN + ", " + Branch.CITY_COLUMN + ", " + Branch.STREET_COLUMN + ", " + Branch.STREET_NUMBER_COLUMN + " FROM " + Branch.TABLE_NAME;
+        SQL_FIND_ALL_LIMIT = SQL_FIND_ALL + " LIMIT ? OFFSET ?";
         SQL_FIND_BY_PK = SQL_FIND_ALL + " WHERE " + Branch.ID_COLUMN + "=?";
         SQL_GET_COUNT = "SELECT count(*) AS " + Branch.COUNT + " FROM " + Branch.TABLE_NAME;
-        SQL_INSERT = "INSERT INTO " + Branch.TABLE_NAME + " (" + Branch.ID_COLUMN + ", " + Branch.CITY_COLUMN + ", " + Branch.STREET_COLUMN + ", " + Branch.STREET_NUMBER_COLUMN + ") VALUES (?, ?, ?, ?)";
+        SQL_INSERT = "INSERT INTO " + Branch.TABLE_NAME + " (" + Branch.CITY_COLUMN + ", " + Branch.STREET_COLUMN + ", " + Branch.STREET_NUMBER_COLUMN + ") VALUES (?, ?, ?)";
         SQL_UPDATE = "UPDATE " + Branch.TABLE_NAME + " SET " + Branch.CITY_COLUMN + "=?, " + Branch.STREET_COLUMN + "=?, " + Branch.STREET_NUMBER_COLUMN + "=? WHERE " + Branch.ID_COLUMN + "=?";
         SQL_DELETE = "DELETE FROM " + Branch.TABLE_NAME + " WHERE " + Branch.ID_COLUMN + "=?";
     }
@@ -53,8 +54,12 @@ public class BranchDaoImpl extends AbstractJDBCDao<Branch, Integer> implements B
                 object.setId(generatedKeys.getInt(Branch.ID_COLUMN));
             }
         } catch (SQLException e) {
-            LOGGER.error("parseResultSetGeneratedKeys ", e);
-            throw new PersistentException(e);
+            try {
+                object.setId(generatedKeys.getInt(1));
+            } catch (SQLException e1) {
+                LOGGER.error("parseResultSetGeneratedKeys ", e1);
+                throw new PersistentException(e1);
+            }
         }
     }
 
@@ -75,10 +80,9 @@ public class BranchDaoImpl extends AbstractJDBCDao<Branch, Integer> implements B
     @Override
     protected void preparedStatementForInsert(PreparedStatement preparedStatement, Branch object) throws PersistentException {
         try {
-            preparedStatement.setInt(1, object.getId());
-            preparedStatement.setInt(2, object.getCity());
-            preparedStatement.setString(3, object.getStreet());
-            preparedStatement.setString(4, object.getStreetNumber());
+            preparedStatement.setInt(1, object.getCity());
+            preparedStatement.setString(2, object.getStreet());
+            preparedStatement.setString(3, object.getStreetNumber());
         } catch (SQLException e) {
             LOGGER.error("preparedStatementForInsert ", e);
             throw new PersistentException(e);

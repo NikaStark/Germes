@@ -43,7 +43,9 @@ public class RegistrationCommand implements ICommand {
             request.getRequestDispatcher(Command.REG_PAGE_CMD.getCommand()).forward(request, response);
             return;
         }
-        User user = new User(username, password, email, firstName, lastName, Role.CLIENT);
+        User user = new User(username, password, email, firstName, lastName,
+                (((User) request.getSession().getAttribute(Attribute.CURRENT_USER_ATR.getAttribute())).getRole() ==
+                        Role.GUEST) ? Role.CLIENT : Role.MANAGER);
         UserService userService = ((ServiceFactory) request.getServletContext()
                 .getAttribute(Attribute.SERVICE_FACTORY_ATR.getAttribute())).getService(UserServiceImpl.class);
         try {
@@ -52,7 +54,9 @@ public class RegistrationCommand implements ICommand {
             e.printStackTrace(); //TODO
         }
         //TODO output message: reg success
-        request.getRequestDispatcher(Command.LOGIN_CMD.getCommand()).forward(request, response);
+        request.getRequestDispatcher(((User) request.getSession().getAttribute(Attribute.CURRENT_USER_ATR.
+                        getAttribute())).getRole() != Role.GUEST ? Command.HOME_PAGE_CMD.getCommand() :
+                Command.LOGIN_CMD.getCommand()).forward(request, response);
     }
 
 }
